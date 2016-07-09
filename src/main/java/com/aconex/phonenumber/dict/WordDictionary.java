@@ -2,9 +2,7 @@ package com.aconex.phonenumber.dict;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.nio.charset.Charset;
+import java.io.Reader;
 import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
@@ -20,12 +18,11 @@ public class WordDictionary {
      * The word is normalized: only a-zA-Z characters left, e.g. I'm -> Im
      * After normalization, the empty word is ignored
      *
-     * @param inputStream
+     * @param reader
      * @throws IOException
      */
-    public WordDictionary initFromStream(InputStream inputStream) throws IOException {
-        Charset utf8 = Charset.forName("utf-8");
-        try (BufferedReader dictReader = new BufferedReader(new InputStreamReader(inputStream, utf8))) {
+    public WordDictionary initFromReader(Reader reader) throws IOException {
+        try (BufferedReader dictReader = new BufferedReader(reader)) {
             while (true) {
                 String line = dictReader.readLine();
                 if (line == null) {

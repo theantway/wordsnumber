@@ -5,7 +5,7 @@ import org.testng.annotations.Test;
 
 import java.io.IOException;
 
-import static com.aconex.phonenumber.dict.WordDictionaryHelper.dictStream;
+import static com.aconex.phonenumber.dict.WordDictionaryHelper.dictReader;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.testng.Assert.assertTrue;
 
@@ -16,7 +16,7 @@ public class WordDictionaryTest {
     }
 
     public void should_add_word_to_dict() throws IOException {
-        WordDictionary dict = new WordDictionary().initFromStream(dictStream("test", "word"));
+        WordDictionary dict = new WordDictionary().initFromReader(dictReader("test", "word"));
 
         assertThat(dict.size(), Is.is(2));
         assertTrue(dict.containsWord("test"));
@@ -24,7 +24,7 @@ public class WordDictionaryTest {
     }
 
     public void should_query_word_in_case_insensitive() throws IOException {
-        WordDictionary dict = new WordDictionary().initFromStream(dictStream("tEsT", "wOrD"));
+        WordDictionary dict = new WordDictionary().initFromReader(dictReader("tEsT", "wOrD"));
 
         assertThat(dict.size(), Is.is(2));
         assertTrue(dict.containsWord("test"));
@@ -34,14 +34,14 @@ public class WordDictionaryTest {
     }
 
     public void should_normalize_word_before_add_to_dict() throws IOException {
-        WordDictionary dict = new WordDictionary().initFromStream(dictStream("test 1'-_\"~!@#$^+ word"));
+        WordDictionary dict = new WordDictionary().initFromReader(dictReader("test 1'-_\"~!@#$^+ word"));
 
         assertThat(dict.size(), Is.is(1));
         assertTrue(dict.containsWord("testword"));
     }
 
     public void should_not_add_invalid_word_to_dict() throws IOException {
-        WordDictionary dict = new WordDictionary().initFromStream(dictStream(" 1'-_\"~!@#$^+ "));
+        WordDictionary dict = new WordDictionary().initFromReader(dictReader(" 1'-_\"~!@#$^+ "));
 
         assertThat(dict.size(), Is.is(0));
     }

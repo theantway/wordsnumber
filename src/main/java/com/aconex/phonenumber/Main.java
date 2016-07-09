@@ -43,7 +43,8 @@ public class Main {
      * @throws IOException
      */
     protected static void processPhoneNumbers(String dictFile, List<Reader> phoneNumberReaders) throws IOException {
-        WordDictionary dict = new WordDictionary().initFromStream(initDictionary(dictFile));
+        WordDictionary dict = new WordDictionary()
+                .initFromReader(new InputStreamReader(dictStream(dictFile), utf8));
         WordNumberFinder wordNumberFinder = new WordNumberFinder(new WordsSplitter(dict));
 
         for (Reader phoneNumberFile : phoneNumberReaders) {
@@ -69,7 +70,7 @@ public class Main {
      * @return WordDictionary
      * @throws IOException
      */
-    private static InputStream initDictionary(String dictFile) throws IOException {
+    private static InputStream dictStream(String dictFile) throws IOException {
         if (dictFile == null) {
             return Main.class.getResourceAsStream(DEFAULT_DICTIONARY);
         } else {
