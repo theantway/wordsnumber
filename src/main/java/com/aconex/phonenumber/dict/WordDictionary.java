@@ -13,8 +13,6 @@ import java.util.Set;
  * WordDictionary provides function to store and query word case-insensitively
  */
 public class WordDictionary {
-    private static final String EMPTY = "";
-
     private final Set<String> entries = new HashSet<>();
 
     /**
@@ -74,10 +72,6 @@ public class WordDictionary {
      * @return
      */
     private String normalizeWord(String word) {
-        if (word == null) {
-            return EMPTY;
-        }
-
         word = word.toUpperCase(Locale.ENGLISH);
 
         StringBuilder builder = new StringBuilder(word.length());

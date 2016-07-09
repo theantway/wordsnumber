@@ -3,7 +3,8 @@ package com.aconex.phonenumber.wordnumber;
 import java.util.*;
 
 /**
- * Find a list of words from a dictionary to represent a phone number.
+ * Replace a phone number with all possible letters
+ * and use {@link WordsSplitter} to check if the replacement has matched words in dictionary
  */
 public class WordNumberFinder {
     private WordsSplitter wordsSplitter;

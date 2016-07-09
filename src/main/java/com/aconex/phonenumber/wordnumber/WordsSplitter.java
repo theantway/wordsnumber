@@ -24,7 +24,7 @@ public class WordsSplitter {
      * There are two candidates to split MYSELF, ["MY", "SELF"] and ["MYSELF"]
      *
      * @param str string to split to words
-     * @return List of {@link WordsCandidate}, empty list if not possible to split into words in dictionary
+     * @return List of {@link WordsCandidate}, return empty list if not possible to split into words in dictionary
      */
     public List<WordsCandidate> splitWords(String str) {
         return splitWords(str, 0);
