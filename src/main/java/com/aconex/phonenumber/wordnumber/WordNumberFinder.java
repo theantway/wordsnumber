@@ -52,7 +52,11 @@ public class WordNumberFinder {
      */
     private List<WordsCandidate> findWordNumbers(String number, int pos, List<WordsCandidate> candidates, Deque<Character> replacedNumbers) {
         if (pos == number.length()) {
-            candidates.addAll(wordsSplitter.splitWords(toStr(replacedNumbers)));
+            //ignore invalid numbers
+            if (replacedNumbers.size() > 0) {
+                candidates.addAll(wordsSplitter.splitWords(toStr(replacedNumbers)));
+            }
+
             return candidates;
         }
 

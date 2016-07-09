@@ -47,4 +47,12 @@ public class WordNumberFinderTest {
 
         assertThat(wordNumbers.size(), is(0));
     }
+
+    public void should_return_empty_list_for_invalid_number()  {
+        WordDictionary dict = WordDictionaryHelper.buildDict();
+
+        List<WordsCandidate> wordNumbers = new WordNumberFinder(new WordsSplitter(dict)).findWordNumbers("asdf");
+
+        assertThat(wordNumbers.size(), is(0));
+    }
 }
