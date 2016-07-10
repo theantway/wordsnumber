@@ -4,9 +4,12 @@ import com.aconex.phonenumber.dict.WordDictionary;
 import com.aconex.phonenumber.dict.WordDictionaryHelper;
 import org.testng.annotations.Test;
 
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.core.Is.is;
 
 @Test
@@ -63,6 +66,16 @@ public class WordNumberFinderTest {
         List<WordsCandidate> wordNumbers = new WordNumberFinder(new WordsSplitter(dict)).findWordNumbers("861373466543745");
 
         assertThat(wordNumbers.size(), is(0));
+    }
+
+    @Test(timeOut = 1000)
+    public void should_return_quickly_for_long_numbers_using_default_dict() throws IOException {
+        InputStreamReader defaultDictReader = new InputStreamReader(getClass().getResourceAsStream("/dict_2of12.txt"));
+        WordDictionary dict = new WordDictionary().initFromReader(defaultDictReader);
+
+        List<WordsCandidate> wordNumbers = new WordNumberFinder(new WordsSplitter(dict)).findWordNumbers("861373466543745");
+
+        assertThat(wordNumbers.size(), greaterThan(0));
     }
 
     @Test(timeOut = 500)

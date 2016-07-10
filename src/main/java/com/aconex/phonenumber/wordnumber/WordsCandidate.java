@@ -4,7 +4,7 @@ import java.util.ArrayDeque;
 import java.util.Deque;
 
 /**
- * A candidate for phone number replacement.
+ * A WordsCandidate represents a list of words to split the replacement
  */
 public class WordsCandidate {
     private final Deque<String> words = new ArrayDeque<>();
