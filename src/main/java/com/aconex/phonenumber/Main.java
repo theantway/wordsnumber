@@ -33,16 +33,17 @@ public class Main {
             phoneNumberReaders.add(new InputStreamReader(System.in, utf8));
         }
 
-        processPhoneNumbers(dictFile, phoneNumberReaders);
+        processPhoneNumbers(dictFile, phoneNumberReaders, System.out);
     }
 
     /**
      * read phone numbers from list of readers, find out all possible replacements and print out the words
      * @param dictFile file path of dict file, will use default dict if is null
      * @param phoneNumberReaders list of phone number readers to support read from multiple files
+     * @param out
      * @throws IOException
      */
-    protected static void processPhoneNumbers(String dictFile, List<Reader> phoneNumberReaders) throws IOException {
+    protected static void processPhoneNumbers(String dictFile, List<Reader> phoneNumberReaders, PrintStream out) throws IOException {
         WordDictionary dict = new WordDictionary()
                 .initFromReader(new InputStreamReader(dictStream(dictFile), utf8));
         WordNumberFinder wordNumberFinder = new WordNumberFinder(new WordsSplitter(dict));
@@ -58,7 +59,7 @@ public class Main {
 
                     List<WordsCandidate> candidates = wordNumberFinder.findWordNumbers(line);
 
-                    print(candidates);
+                    print(candidates, out);
                 }
             }
         }
@@ -100,9 +101,9 @@ public class Main {
         return dictFile;
     }
 
-    private static void print(List<WordsCandidate> candidates) {
+    private static void print(List<WordsCandidate> candidates, PrintStream out) {
         for (WordsCandidate wordsCandidate : candidates) {
-            System.out.println(wordsCandidate.join("-"));
+            out.println(wordsCandidate.join("-"));
         }
     }
 }

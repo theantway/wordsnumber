@@ -15,9 +15,18 @@ public class TrieTest {
 
     public void should_check_if_contains_word_case_insensitively() {
         Trie trie = new Trie();
-        trie.add("case-sensitive");
+        trie.add("case-sensitive2");
 
         assertTrue(trie.contains("CASESENSITIVE"));
+    }
+
+    public void should_only_save_A_to_Z_letters() {
+        Trie trie = new Trie();
+        trie.add("test2[]");
+
+        assertTrue(trie.contains("test"));
+        assertFalse(trie.contains("test2"));
+        assertFalse(trie.contains("test[]"));
     }
 
     public void should_check_if_contains_word_starts_with_prefix() {

@@ -32,7 +32,7 @@ class Trie {
         for (int i = 0; i < word.length(); i++) {
             c = word.charAt(i);
             int pos = c - 'A';
-            if (pos < 0 || pos > CHILDREN_NODE_SIZE) {
+            if (pos < 0 || pos >= CHILDREN_NODE_SIZE) {
                 continue;
             }
 

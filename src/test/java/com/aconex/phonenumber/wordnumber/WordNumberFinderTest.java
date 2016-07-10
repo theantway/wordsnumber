@@ -73,4 +73,12 @@ public class WordNumberFinderTest {
 
         assertThat(wordNumbers.size(), is(0));
     }
+
+    public void should_return_empty_for_null()  {
+        WordDictionary dict = WordDictionaryHelper.buildDict();
+
+        List<WordsCandidate> wordNumbers = new WordNumberFinder(new WordsSplitter(dict)).findWordNumbers(null);
+
+        assertThat(wordNumbers.size(), is(0));
+    }
 }
