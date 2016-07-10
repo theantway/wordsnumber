@@ -19,6 +19,19 @@ public class WordsSplitterTest {
         assertThat(candidates.get(0).join("-"), Is.is("CALL-ME"));
     }
 
+    public void should_return_if_can_split_word() {
+        WordsSplitter wordsSplitter = new WordsSplitter(buildDict("CALL", "ME"));
+
+        assertThat(wordsSplitter.canSplitWords("CALLME"), Is.is(true));
+    }
+
+    public void should_return_if_can_split_word_partial() {
+        WordsSplitter wordsSplitter = new WordsSplitter(buildDict("CALL", "ME"));
+
+        assertThat(wordsSplitter.canSplitWords("CALLM"), Is.is(true));
+        assertThat(wordsSplitter.canSplitWords("1CALLM"), Is.is(true));
+    }
+
     public void should_return_all_possible_splitting_candidates() {
         WordsSplitter wordsSplitter = new WordsSplitter(buildDict("M", "Y", "MY", "SELF", "MYSELF"));
 

@@ -60,6 +60,11 @@ public class WordNumberFinder {
             return candidates;
         }
 
+        //Stop replacing the following numbers if no potential words for current replacement
+        if (!wordsSplitter.canSplitWords(toStr(replacedNumbers))) {
+            return candidates;
+        }
+
         char c = number.charAt(pos);
         if (!Character.isDigit(c)) {
             //ignore non number characters

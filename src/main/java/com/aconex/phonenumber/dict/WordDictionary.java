@@ -3,15 +3,21 @@ package com.aconex.phonenumber.dict;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
-import java.util.HashSet;
 import java.util.Locale;
-import java.util.Set;
 
 /**
  * WordDictionary provides function to store and query word case-insensitively
  */
 public class WordDictionary {
-    private final Set<String> entries = new HashSet<>();
+    /**
+     * Use Trie tree to save all the entries
+     */
+    private final Trie entries = new Trie();
+
+    /**
+     * entry counts in this dictionary
+     */
+    private int count = 0;
 
     /**
      * init from inputstream which contains a word each line.
@@ -40,7 +46,7 @@ public class WordDictionary {
      * @return
      */
     public int size() {
-        return entries.size();
+        return count;
     }
 
     /**
@@ -49,7 +55,16 @@ public class WordDictionary {
      * @return
      */
     public boolean containsWord(String word) {
-        return entries.contains(word.toUpperCase(Locale.ENGLISH));
+        return entries.contains(word);
+    }
+
+    /**
+     * check if any word in dictionary starts with prefix case-insensitively
+     * @param prefix
+     * @return
+     */
+    public boolean hasWordStartsWith(String prefix) {
+        return entries.hasWordStartsWith(prefix);
     }
 
     private void addWord(String word) {
@@ -60,6 +75,7 @@ public class WordDictionary {
             return;
         }
 
+        count++;
         entries.add(normalizedWord);
     }
 

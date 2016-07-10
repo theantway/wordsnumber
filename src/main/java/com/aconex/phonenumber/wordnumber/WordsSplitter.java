@@ -20,7 +20,7 @@ public class WordsSplitter {
 
     /**
      * Split a str into words defined in dictionary. returns all the possible candidates, e.g.
-     *
+     * <p>
      * There are two candidates to split MYSELF, ["MY", "SELF"] and ["MYSELF"]
      *
      * @param str string to split to words
@@ -31,7 +31,17 @@ public class WordsSplitter {
     }
 
     /**
+     * check if it is possible to split string into words from dictionary
+     * @param str
+     * @return true if able to split, else false
+     */
+    public boolean canSplitWords(String str) {
+        return canSplitWords(str, 0);
+    }
+
+    /**
      * from given position, split a str into words defined in dictionary
+     *
      * @param str string to split to words
      * @param pos split from this position
      * @return List of {@link WordsCandidate}, empty list if not possible to split into words in dictionary
@@ -61,6 +71,39 @@ public class WordsSplitter {
         }
 
         return candidates;
+    }
+
+    /**
+     * check if str can be split into words from pos
+     * @param str
+     * @param pos
+     * @return
+     */
+    private boolean canSplitWords(String str, int pos) {
+        if (pos == str.length()) {
+            return true;
+        }
+
+        for (int i = pos; i < str.length(); i++) {
+            char c = str.charAt(i);
+
+            if (isDigit(c)) {
+                if (i == pos) {
+                    return canSplitWords(str, i + 1);
+                }
+            } else {
+                String word = str.substring(pos, i + 1);
+                if (dictionary.containsWord(word)) {
+                    if (canSplitWords(str, i + 1)){
+                        return true;
+                    }
+                } else if (!dictionary.hasWordStartsWith(word)) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
     }
 
     private List<WordsCandidate> addWords(String word, List<WordsCandidate> restWordList) {
