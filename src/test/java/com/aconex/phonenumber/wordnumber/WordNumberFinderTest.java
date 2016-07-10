@@ -64,4 +64,13 @@ public class WordNumberFinderTest {
 
         assertThat(wordNumbers.size(), is(0));
     }
+
+    @Test(timeOut = 500)
+    public void should_return_empty_list_for_very_long_numbers()  {
+        WordDictionary dict = WordDictionaryHelper.buildDict("A","B","C","D","E","F");
+
+        List<WordsCandidate> wordNumbers = new WordNumberFinder(new WordsSplitter(dict)).findWordNumbers("2323232323232323");
+
+        assertThat(wordNumbers.size(), is(0));
+    }
 }

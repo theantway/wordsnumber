@@ -10,13 +10,16 @@ import static java.util.Arrays.asList;
 
 @Test
 public class MainTest {
+    @Test(timeOut = 1500)
     public void should_find_all_possible_words_for_number_using_default_dict() throws IOException {
         Main.processPhoneNumbers(null, asList(new StringReader(join("\n",
                 "1697353",
                 "2255.63",
                 "428445374",
                 "12556348",
-                "11112000"
+                "11112000",
+                "861373464564564",
+                "861373464564564456456"
         ))));
     }
 }
