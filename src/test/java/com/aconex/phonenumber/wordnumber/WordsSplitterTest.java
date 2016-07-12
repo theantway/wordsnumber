@@ -13,10 +13,10 @@ public class WordsSplitterTest {
     public void should_split_word() {
         WordsSplitter wordsSplitter = new WordsSplitter(buildDict("CALL", "ME"));
 
-        List<WordsCandidate> candidates = wordsSplitter.splitWords("CALLME");
+        List<WordsNumber> wordsNumbers = wordsSplitter.splitWords("CALLME");
 
-        assertThat(candidates.size(), Is.is(1));
-        assertThat(candidates.get(0).join("-"), Is.is("CALL-ME"));
+        assertThat(wordsNumbers.size(), Is.is(1));
+        assertThat(wordsNumbers.get(0).join("-"), Is.is("CALL-ME"));
     }
 
     public void should_return_if_can_split_word() {
@@ -32,22 +32,22 @@ public class WordsSplitterTest {
         assertThat(wordsSplitter.canSplitWords("1CALLM"), Is.is(true));
     }
 
-    public void should_return_all_possible_splitting_candidates() {
+    public void should_return_all_possible_splitting_words_numbers() {
         WordsSplitter wordsSplitter = new WordsSplitter(buildDict("M", "Y", "MY", "SELF", "MYSELF"));
 
-        List<WordsCandidate> candidates = wordsSplitter.splitWords("MYSELF");
+        List<WordsNumber> wordsNumbers = wordsSplitter.splitWords("MYSELF");
 
-        assertThat(candidates.size(), Is.is(3));
-        assertThat(candidates.get(0).join("-"), Is.is("M-Y-SELF"));
-        assertThat(candidates.get(1).join("-"), Is.is("MY-SELF"));
-        assertThat(candidates.get(2).join("-"), Is.is("MYSELF"));
+        assertThat(wordsNumbers.size(), Is.is(3));
+        assertThat(wordsNumbers.get(0).join("-"), Is.is("M-Y-SELF"));
+        assertThat(wordsNumbers.get(1).join("-"), Is.is("MY-SELF"));
+        assertThat(wordsNumbers.get(2).join("-"), Is.is("MYSELF"));
     }
 
     public void should_return_empty_list_when_no_matched_words() {
         WordsSplitter wordsSplitter = new WordsSplitter(buildDict());
 
-        List<WordsCandidate> candidates = wordsSplitter.splitWords("any3");
+        List<WordsNumber> wordsNumbers = wordsSplitter.splitWords("any3");
 
-        assertThat(candidates.size(), Is.is(0));
+        assertThat(wordsNumbers.size(), Is.is(0));
     }
 }

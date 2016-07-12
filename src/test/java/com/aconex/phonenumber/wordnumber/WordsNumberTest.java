@@ -6,12 +6,12 @@ import org.testng.annotations.Test;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 @Test
-public class WordsCandidateTest {
+public class WordsNumberTest {
     public void should_able_to_add_word_to_front() {
-        WordsCandidate candidate = new WordsCandidate()
+        WordsNumber wordsNumber = new WordsNumber()
                 .addFront("CALL")
                 .addFront("IT");
 
-        assertThat(candidate.join("-"), Is.is("IT-CALL"));
+        assertThat(wordsNumber.join("-"), Is.is("IT-CALL"));
     }
 }

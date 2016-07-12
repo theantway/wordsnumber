@@ -4,9 +4,9 @@ import java.util.ArrayDeque;
 import java.util.Deque;
 
 /**
- * A WordsCandidate represents a list of words to split the replacement
+ * A WordsNumber represents a list of words to split the replacement
  */
-public class WordsCandidate {
+public class WordsNumber {
     private final Deque<String> words = new ArrayDeque<>();
 
     /**
@@ -14,7 +14,7 @@ public class WordsCandidate {
      * @param word
      * @return
      */
-    public WordsCandidate addFront(String word) {
+    public WordsNumber addFront(String word) {
         words.addFirst(word);
 
         return this;

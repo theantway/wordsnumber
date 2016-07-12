@@ -15,7 +15,11 @@ public class WordNumberFinder {
     private static final Logger logger = LoggerFactory.getLogger(WordNumberFinder.class);
     private static final int MAX_PHONE_NUMBER_LENGT = 15;
 
-    private WordsSplitter wordsSplitter;
+    private final WordsSplitter wordsSplitter;
+    private final String originalNumber;
+    private final List<WordsNumber> wordsNumbers = new ArrayList<>();
+
+    private final Deque<Character> currentReplacedNumber = new ArrayDeque<>();
 
     private static final Map<Character, char[]> PHONE_KEY_MAPS = new HashMap<Character, char[]>() {
         {
@@ -36,29 +40,29 @@ public class WordNumberFinder {
         }
     };
 
-    public WordNumberFinder(WordsSplitter wordsSplitter) {
+    public WordNumberFinder(WordsSplitter wordsSplitter, String originalNumber) {
         this.wordsSplitter = wordsSplitter;
+        this.originalNumber = originalNumber;
     }
 
     /**
      * Find all possible list of words from a dictionary to represent a phone number.
      *
-     * @param number phone number
-     * @return list of {@link WordsCandidate}, empty list if no matched words found.
+     * @return list of {@link WordsNumber}, empty list if no matched words found.
      */
-    public List<WordsCandidate> findWordNumbers(String number) {
-        String normalizedNumber = normalizeNumber(number);
+    public List<WordsNumber> findWordNumbers() {
+        String normalizedNumber = normalizeNumber(originalNumber);
 
         if (normalizedNumber.length() == 0) {
             return Collections.emptyList();
         }
 
         if (normalizedNumber.length() > MAX_PHONE_NUMBER_LENGT) {
-            logger.warn("Phone number too large: " + number);
+            logger.warn("Phone number too large: " + originalNumber);
             return Collections.emptyList();
         }
 
-        return findWordNumbers(normalizedNumber, 0, new ArrayList<>(), new ArrayDeque<>());
+        return findWordNumbers(normalizedNumber, 0);
     }
 
     /**
@@ -83,54 +87,49 @@ public class WordNumberFinder {
     }
 
     /**
-     * use dfs to replace each number, and return all matched candidates
+     * use dfs to replace each number, and return all matched words numbers
      *
      * @param number          phone number
      * @param pos             replace from this position
-     * @param candidates      save matched candidates
-     * @param replacedNumbers current replaced number
-     * @return list of {@link WordsCandidate}, empty list if no matched words found.
+     * @return list of {@link WordsNumber}, empty list if no matched words found.
      */
-    private List<WordsCandidate> findWordNumbers(String number, int pos, List<WordsCandidate> candidates, Deque<Character> replacedNumbers) {
+    private List<WordsNumber> findWordNumbers(String number, int pos) {
         if (pos == number.length()) {
-            candidates.addAll(wordsSplitter.splitWords(toStr(replacedNumbers)));
-            return candidates;
+            wordsNumbers.addAll(wordsSplitter.splitWords(currentReplacedNumber()));
+            return wordsNumbers;
         }
 
         //Stop replacing the following numbers if no potential words for current replacement
-        if (!wordsSplitter.canSplitWords(toStr(replacedNumbers))) {
-            return candidates;
+        if (!wordsSplitter.canSplitWords(currentReplacedNumber())) {
+            return wordsNumbers;
         }
 
         char c = number.charAt(pos);
 
         for (Character letter : PHONE_KEY_MAPS.get(c)) {
-            replacedNumbers.addLast(letter);
-            findWordNumbers(number, pos + 1, candidates, replacedNumbers);
-            replacedNumbers.removeLast();
+            currentReplacedNumber.addLast(letter);
+            findWordNumbers(number, pos + 1);
+            currentReplacedNumber.removeLast();
         }
 
-        if (pos == 0 || !isDigit(replacedNumbers.peekLast())) {
-            replacedNumbers.addLast(c);
-            findWordNumbers(number, pos + 1, candidates, replacedNumbers);
-            replacedNumbers.removeLast();
+        if (pos == 0 || !isDigit(currentReplacedNumber.peekLast())) {
+            currentReplacedNumber.addLast(c);
+            findWordNumbers(number, pos + 1);
+            currentReplacedNumber.removeLast();
         }
 
-        return candidates;
+        return wordsNumbers;
     }
 
     /**
      * convert Deque of Character to a string
      *
-     * @param deque
      * @return string
      */
-    private String toStr(Deque<Character> deque) {
-        StringBuilder builder = new StringBuilder(deque.size());
+    private String currentReplacedNumber() {
+        StringBuilder builder = new StringBuilder(currentReplacedNumber.size());
 
-        for (Character aDeque : deque) {
-            builder.append(aDeque);
-        }
+        currentReplacedNumber.forEach(builder::append);
 
         return builder.toString();
     }

@@ -19,10 +19,10 @@ Code Structures
 There are following classes:
 
 1. WordDictionary using Trie to save entries of dictionary, it support fast word lookup and prefix lookup
-2. WordsSplitter and WordsCandidate. WordsSplitter split a string into list of WordsCandidate.
+2. WordsSplitter and WordsNumber. WordsSplitter split a string into list of WordsNumber.
     for the same replacement, there are multiple words combinations, e.g. MYSELF -> MY-SELF and MYSELF.
-    Each WordsCandidate represents a list of words to split the replacement.
-3. WordNumberFinder. generate number replacements and use WordsSplitter to get all WordsCandidates for this replacement.
+    Each WordsNumber represents a list of words to split the replacement.
+3. WordNumberFinder. generate number replacements and use WordsSplitter to get all WordsNumber for this replacement.
 4. Main class: the glue class to init dict, read number files and use WordNumberFinder to find replacements for each number
 
 

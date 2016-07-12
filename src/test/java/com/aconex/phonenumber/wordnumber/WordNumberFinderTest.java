@@ -18,7 +18,7 @@ public class WordNumberFinderTest {
     public void should_find_words_to_replace_numbers() {
         WordDictionary dict = WordDictionaryHelper.buildDict("MYSELF");
 
-        List<WordsCandidate> wordNumbers = new WordNumberFinder(new WordsSplitter(dict)).findWordNumbers("697353");
+        List<WordsNumber> wordNumbers = new WordNumberFinder(new WordsSplitter(dict), "697353").findWordNumbers();
 
         assertThat(wordNumbers.size(), is(1));
         assertThat(wordNumbers.get(0).join("-"), is("MYSELF"));
@@ -27,7 +27,7 @@ public class WordNumberFinderTest {
     public void should_ignore_non_number_characters_in_phone_number() {
         WordDictionary dict = WordDictionaryHelper.buildDict("MYSELF");
 
-        List<WordsCandidate> wordNumbers = new WordNumberFinder(new WordsSplitter(dict)).findWordNumbers("69.73.53");
+        List<WordsNumber> wordNumbers = new WordNumberFinder(new WordsSplitter(dict), "69.73.53").findWordNumbers();
 
         assertThat(wordNumbers.size(), is(1));
         assertThat(wordNumbers.get(0).join("-"), is("MYSELF"));
@@ -36,17 +36,17 @@ public class WordNumberFinderTest {
     public void should_find_all_possible_word_replacements() {
         WordDictionary dict = WordDictionaryHelper.buildDict("MY", "SELF", "MYSELF");
 
-        List<WordsCandidate> wordNumbers = new WordNumberFinder(new WordsSplitter(dict)).findWordNumbers("697353");
+        List<WordsNumber> wordNumbers = new WordNumberFinder(new WordsSplitter(dict), "697353").findWordNumbers();
 
         assertThat(wordNumbers.size(), is(2));
         assertThat(wordNumbers.get(0).join("-"), is("MY-SELF"));
         assertThat(wordNumbers.get(1).join("-"), is("MYSELF"));
     }
 
-    public void should_return_empty_list_if_no_replacement_candidates()  {
+    public void should_return_empty_list_if_no_replacement_word_numbers()  {
         WordDictionary dict = WordDictionaryHelper.buildDict();
 
-        List<WordsCandidate> wordNumbers = new WordNumberFinder(new WordsSplitter(dict)).findWordNumbers("697353");
+        List<WordsNumber> wordNumbers = new WordNumberFinder(new WordsSplitter(dict), "697353").findWordNumbers();
 
         assertThat(wordNumbers.size(), is(0));
     }
@@ -54,7 +54,7 @@ public class WordNumberFinderTest {
     public void should_return_empty_list_for_invalid_number()  {
         WordDictionary dict = WordDictionaryHelper.buildDict();
 
-        List<WordsCandidate> wordNumbers = new WordNumberFinder(new WordsSplitter(dict)).findWordNumbers("asdf");
+        List<WordsNumber> wordNumbers = new WordNumberFinder(new WordsSplitter(dict), "asdf").findWordNumbers();
 
         assertThat(wordNumbers.size(), is(0));
     }
@@ -63,7 +63,7 @@ public class WordNumberFinderTest {
     public void should_return_quickly_for_long_numbers()  {
         WordDictionary dict = WordDictionaryHelper.buildDict();
 
-        List<WordsCandidate> wordNumbers = new WordNumberFinder(new WordsSplitter(dict)).findWordNumbers("861373466543745");
+        List<WordsNumber> wordNumbers = new WordNumberFinder(new WordsSplitter(dict), "861373466543745").findWordNumbers();
 
         assertThat(wordNumbers.size(), is(0));
     }
@@ -73,7 +73,7 @@ public class WordNumberFinderTest {
         InputStreamReader defaultDictReader = new InputStreamReader(getClass().getResourceAsStream("/dict_2of12.txt"));
         WordDictionary dict = new WordDictionary().initFromReader(defaultDictReader);
 
-        List<WordsCandidate> wordNumbers = new WordNumberFinder(new WordsSplitter(dict)).findWordNumbers("861373466543745");
+        List<WordsNumber> wordNumbers = new WordNumberFinder(new WordsSplitter(dict), "861373466543745").findWordNumbers();
 
         assertThat(wordNumbers.size(), greaterThan(0));
     }
@@ -82,7 +82,7 @@ public class WordNumberFinderTest {
     public void should_return_empty_list_for_very_long_numbers()  {
         WordDictionary dict = WordDictionaryHelper.buildDict("A","B","C","D","E","F");
 
-        List<WordsCandidate> wordNumbers = new WordNumberFinder(new WordsSplitter(dict)).findWordNumbers("2323232323232323");
+        List<WordsNumber> wordNumbers = new WordNumberFinder(new WordsSplitter(dict), "2323232323232323").findWordNumbers();
 
         assertThat(wordNumbers.size(), is(0));
     }
@@ -90,7 +90,7 @@ public class WordNumberFinderTest {
     public void should_return_empty_for_null()  {
         WordDictionary dict = WordDictionaryHelper.buildDict();
 
-        List<WordsCandidate> wordNumbers = new WordNumberFinder(new WordsSplitter(dict)).findWordNumbers(null);
+        List<WordsNumber> wordNumbers = new WordNumberFinder(new WordsSplitter(dict), null).findWordNumbers();
 
         assertThat(wordNumbers.size(), is(0));
     }

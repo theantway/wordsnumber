@@ -1,7 +1,7 @@
 package com.aconex.phonenumber;
 
 import com.aconex.phonenumber.dict.WordDictionary;
-import com.aconex.phonenumber.wordnumber.WordsCandidate;
+import com.aconex.phonenumber.wordnumber.WordsNumber;
 import com.aconex.phonenumber.wordnumber.WordNumberFinder;
 import com.aconex.phonenumber.wordnumber.WordsSplitter;
 
@@ -45,20 +45,20 @@ public class Main {
     protected static void processPhoneNumbers(CommandOption commandOption, PrintStream out) throws IOException {
         WordDictionary dict = new WordDictionary()
                 .initFromReader(new InputStreamReader(dictStreamOrDefault(commandOption.dictFilePath), utf8));
-        WordNumberFinder wordNumberFinder = new WordNumberFinder(new WordsSplitter(dict));
+        WordsSplitter wordsSplitter = new WordsSplitter(dict);
 
         for (Reader phoneNumberFile : commandOption.phoneNumberReaders) {
             try (BufferedReader fileReader = new BufferedReader(phoneNumberFile)) {
                 while (true) {
-                    String line = fileReader.readLine();
-                    if (line == null) {
+                    String phoneNumberLine = fileReader.readLine();
+                    if (phoneNumberLine == null) {
                         //end of file
                         break;
                     }
 
-                    List<WordsCandidate> candidates = wordNumberFinder.findWordNumbers(line);
+                    List<WordsNumber> wordNumbers = new WordNumberFinder(wordsSplitter, phoneNumberLine).findWordNumbers();
 
-                    print(candidates, out);
+                    print(wordNumbers, out);
                 }
             }
         }
@@ -101,9 +101,9 @@ public class Main {
         return commandOption;
     }
 
-    private static void print(List<WordsCandidate> candidates, PrintStream out) {
-        for (WordsCandidate wordsCandidate : candidates) {
-            out.println(wordsCandidate.join("-"));
+    private static void print(List<WordsNumber> wordsNumbers, PrintStream out) {
+        for (WordsNumber wordsNumber : wordsNumbers) {
+            out.println(wordsNumber.join("-"));
         }
     }
 

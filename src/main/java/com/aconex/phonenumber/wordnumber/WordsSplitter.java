@@ -19,14 +19,14 @@ public class WordsSplitter {
     }
 
     /**
-     * Split a str into words defined in dictionary. returns all the possible candidates, e.g.
+     * Split a str into words defined in dictionary. returns all the possible words number, e.g.
      * <p>
-     * There are two candidates to split MYSELF, ["MY", "SELF"] and ["MYSELF"]
+     * There are two words number to split MYSELF, ["MY", "SELF"] and ["MYSELF"]
      *
      * @param str string to split to words
-     * @return List of {@link WordsCandidate}, return empty list if not possible to split into words in dictionary
+     * @return List of {@link WordsNumber}, return empty list if not possible to split into words in dictionary
      */
-    public List<WordsCandidate> splitWords(String str) {
+    public List<WordsNumber> splitWords(String str) {
         return splitWords(str, 0);
     }
 
@@ -44,12 +44,12 @@ public class WordsSplitter {
      *
      * @param str string to split to words
      * @param pos split from this position
-     * @return List of {@link WordsCandidate}, empty list if not possible to split into words in dictionary
+     * @return List of {@link WordsNumber}, empty list if not possible to split into words in dictionary
      */
-    private List<WordsCandidate> splitWords(String str, int pos) {
-        List<WordsCandidate> candidates = new ArrayList<>();
+    private List<WordsNumber> splitWords(String str, int pos) {
+        List<WordsNumber> wordsNumbers = new ArrayList<>();
         if (pos == str.length()) {
-            return singletonList(new WordsCandidate());
+            return singletonList(new WordsNumber());
         }
 
         for (int i = pos; i < str.length(); i++) {
@@ -58,19 +58,19 @@ public class WordsSplitter {
             if (isDigit(c)) {
                 if (i == pos) {
                     String word = String.valueOf(c);
-                    candidates.addAll(addWords(word, splitWords(str, i + 1)));
+                    wordsNumbers.addAll(addWords(word, splitWords(str, i + 1)));
                 }
 
-                return candidates;
+                return wordsNumbers;
             } else {
                 String word = str.substring(pos, i + 1);
                 if (dictionary.containsWord(word)) {
-                    candidates.addAll(addWords(word, splitWords(str, i + 1)));
+                    wordsNumbers.addAll(addWords(word, splitWords(str, i + 1)));
                 }
             }
         }
 
-        return candidates;
+        return wordsNumbers;
     }
 
     /**
@@ -106,9 +106,9 @@ public class WordsSplitter {
         return true;
     }
 
-    private List<WordsCandidate> addWords(String word, List<WordsCandidate> restWordList) {
-        for (WordsCandidate restWordsCandidate : restWordList) {
-            restWordsCandidate.addFront(word);
+    private List<WordsNumber> addWords(String word, List<WordsNumber> restWordList) {
+        for (WordsNumber restWordsNumber : restWordList) {
+            restWordsNumber.addFront(word);
         }
 
         return restWordList;
