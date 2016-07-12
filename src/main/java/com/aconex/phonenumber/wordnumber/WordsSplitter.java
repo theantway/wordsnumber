@@ -26,8 +26,8 @@ public class WordsSplitter {
      * @param str string to split to words
      * @return List of {@link WordsNumber}, return empty list if not possible to split into words in dictionary
      */
-    public List<WordsNumber> splitWords(String str) {
-        return splitWords(str, 0);
+    public List<WordsNumber> splitStringToWords(String str) {
+        return splitStringToWords(str, 0);
     }
 
     /**
@@ -35,8 +35,8 @@ public class WordsSplitter {
      * @param str
      * @return true if able to split, else false
      */
-    public boolean canSplitWords(String str) {
-        return canSplitWords(str, 0);
+    public boolean canSplitStringToWords(String str) {
+        return canSplitStringToWords(str, 0);
     }
 
     /**
@@ -46,7 +46,7 @@ public class WordsSplitter {
      * @param pos split from this position
      * @return List of {@link WordsNumber}, empty list if not possible to split into words in dictionary
      */
-    private List<WordsNumber> splitWords(String str, int pos) {
+    private List<WordsNumber> splitStringToWords(String str, int pos) {
         List<WordsNumber> wordsNumbers = new ArrayList<>();
         if (pos == str.length()) {
             return singletonList(new WordsNumber());
@@ -58,14 +58,14 @@ public class WordsSplitter {
             if (isDigit(c)) {
                 if (i == pos) {
                     String word = String.valueOf(c);
-                    wordsNumbers.addAll(addWords(word, splitWords(str, i + 1)));
+                    wordsNumbers.addAll(addWord(word, splitStringToWords(str, i + 1)));
                 }
 
                 return wordsNumbers;
             } else {
                 String word = str.substring(pos, i + 1);
                 if (dictionary.containsWord(word)) {
-                    wordsNumbers.addAll(addWords(word, splitWords(str, i + 1)));
+                    wordsNumbers.addAll(addWord(word, splitStringToWords(str, i + 1)));
                 }
             }
         }
@@ -79,7 +79,7 @@ public class WordsSplitter {
      * @param pos
      * @return
      */
-    private boolean canSplitWords(String str, int pos) {
+    private boolean canSplitStringToWords(String str, int pos) {
         if (pos == str.length()) {
             return true;
         }
@@ -89,12 +89,12 @@ public class WordsSplitter {
 
             if (isDigit(c)) {
                 if (i == pos) {
-                    return canSplitWords(str, i + 1);
+                    return canSplitStringToWords(str, i + 1);
                 }
             } else {
                 String word = str.substring(pos, i + 1);
                 if (dictionary.containsWord(word)) {
-                    if (canSplitWords(str, i + 1)){
+                    if (canSplitStringToWords(str, i + 1)){
                         return true;
                     }
                 } else if (!dictionary.hasWordStartsWith(word)) {
@@ -106,7 +106,7 @@ public class WordsSplitter {
         return true;
     }
 
-    private List<WordsNumber> addWords(String word, List<WordsNumber> restWordList) {
+    private List<WordsNumber> addWord(String word, List<WordsNumber> restWordList) {
         for (WordsNumber restWordsNumber : restWordList) {
             restWordsNumber.addFront(word);
         }

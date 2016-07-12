@@ -13,7 +13,7 @@ import static java.lang.Character.isDigit;
  */
 public class WordsNumberFinder {
     private static final Logger logger = LoggerFactory.getLogger(WordsNumberFinder.class);
-    private static final int MAX_PHONE_NUMBER_LENGT = 15;
+    private static final int MAX_PHONE_NUMBER_LENGTH = 15;
 
     private final WordsSplitter wordsSplitter;
     private final String originalNumber;
@@ -57,7 +57,7 @@ public class WordsNumberFinder {
             return Collections.emptyList();
         }
 
-        if (normalizedNumber.length() > MAX_PHONE_NUMBER_LENGT) {
+        if (normalizedNumber.length() > MAX_PHONE_NUMBER_LENGTH) {
             logger.warn("Phone number too large: " + originalNumber);
             return Collections.emptyList();
         }
@@ -95,12 +95,12 @@ public class WordsNumberFinder {
      */
     private List<WordsNumber> findWordNumbers(String number, int pos) {
         if (pos == number.length()) {
-            wordsNumbers.addAll(wordsSplitter.splitWords(currentReplacedNumber()));
+            wordsNumbers.addAll(wordsSplitter.splitStringToWords(currentReplacedNumber()));
             return wordsNumbers;
         }
 
         //Stop replacing the following numbers if no potential words for current replacement
-        if (!wordsSplitter.canSplitWords(currentReplacedNumber())) {
+        if (!wordsSplitter.canSplitStringToWords(currentReplacedNumber())) {
             return wordsNumbers;
         }
 
