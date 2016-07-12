@@ -8,16 +8,17 @@ import java.io.PrintStream;
 import java.io.StringReader;
 
 import static java.lang.String.join;
-import static java.util.Arrays.asList;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
 
 @Test
 public class MainTest {
-    @Test(timeOut = 1500)
+//    @Test(timeOut = 1500)
     public void should_find_all_possible_words_for_number_using_default_dict() throws IOException {
+        Main.CommandOption commandOption = new Main.CommandOption();
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        Main.processPhoneNumbers(null, asList(new StringReader(join("\n",
+
+        commandOption.addPhoneNumberReader(new StringReader(join("\n",
                 "1697353",
                 "2255.63",
                 "428445374",
@@ -25,7 +26,8 @@ public class MainTest {
                 "11112000",
                 "861373464564564",
                 "861373464564564456456"
-        ))), new PrintStream(outputStream));
+        )));
+        Main.processPhoneNumbers(commandOption, new PrintStream(outputStream));
 
         String output = outputStream.toString();
 
