@@ -9,8 +9,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
 public class WordsNumberTest {
     public void should_able_to_add_word_to_front() {
         WordsNumber wordsNumber = new WordsNumber()
-                .addFront("CALL")
-                .addFront("IT");
+                .addWordToFront("CALL")
+                .addWordToFront("IT");
 
         assertThat(wordsNumber.join("-"), Is.is("IT-CALL"));
     }

@@ -14,7 +14,7 @@ public class WordsNumber {
      * @param word
      * @return
      */
-    public WordsNumber addFront(String word) {
+    public WordsNumber addWordToFront(String word) {
         words.addFirst(word);
 
         return this;

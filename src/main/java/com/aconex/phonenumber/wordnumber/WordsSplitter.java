@@ -108,7 +108,7 @@ public class WordsSplitter {
 
     private List<WordsNumber> addWord(String word, List<WordsNumber> restWordList) {
         for (WordsNumber restWordsNumber : restWordList) {
-            restWordsNumber.addFront(word);
+            restWordsNumber.addWordToFront(word);
         }
 
         return restWordList;
