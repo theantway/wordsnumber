@@ -11,8 +11,8 @@ import static java.lang.Character.isDigit;
  * Replace a phone number with all possible letters
  * and use {@link WordsSplitter} to check if the replacement has matched words in dictionary
  */
-public class WordNumberFinder {
-    private static final Logger logger = LoggerFactory.getLogger(WordNumberFinder.class);
+public class WordsNumberFinder {
+    private static final Logger logger = LoggerFactory.getLogger(WordsNumberFinder.class);
     private static final int MAX_PHONE_NUMBER_LENGT = 15;
 
     private final WordsSplitter wordsSplitter;
@@ -40,7 +40,7 @@ public class WordNumberFinder {
         }
     };
 
-    public WordNumberFinder(WordsSplitter wordsSplitter, String originalNumber) {
+    public WordsNumberFinder(WordsSplitter wordsSplitter, String originalNumber) {
         this.wordsSplitter = wordsSplitter;
         this.originalNumber = originalNumber;
     }

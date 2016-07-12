@@ -2,7 +2,7 @@ package com.aconex.phonenumber;
 
 import com.aconex.phonenumber.dict.WordDictionary;
 import com.aconex.phonenumber.wordnumber.WordsNumber;
-import com.aconex.phonenumber.wordnumber.WordNumberFinder;
+import com.aconex.phonenumber.wordnumber.WordsNumberFinder;
 import com.aconex.phonenumber.wordnumber.WordsSplitter;
 
 import java.io.*;
@@ -56,7 +56,7 @@ public class Main {
                         break;
                     }
 
-                    List<WordsNumber> wordNumbers = new WordNumberFinder(wordsSplitter, phoneNumberLine).findWordNumbers();
+                    List<WordsNumber> wordNumbers = new WordsNumberFinder(wordsSplitter, phoneNumberLine).findWordNumbers();
 
                     print(wordNumbers, out);
                 }
