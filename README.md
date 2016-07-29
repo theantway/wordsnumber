@@ -64,3 +64,4 @@ Assumptions
 2. Chose a default dictionary from http://wordlist.aspell.net which has 41242 entries. The file is located at src/main/resources/dict_2of12.txt
 3. Print out all possible combinations for the same replacement, e.g. MYSELF can be split into ["MY", "SELF"] or ["MYSELF"]
 4. Application support to specify multiple phone number files from command line
+
