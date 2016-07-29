@@ -65,3 +65,4 @@ Assumptions
 3. Print out all possible combinations for the same replacement, e.g. MYSELF can be split into ["MY", "SELF"] or ["MYSELF"]
 4. Application support to specify multiple phone number files from command line
 
+
